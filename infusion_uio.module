@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Integration of the Infusion User Interface Options with Drupal.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function infusion_uio_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#infusion_uio': {
+        $uiohelp = '<h3>' . t('About') . '</h3>';
+        $uiohelp .= '<p>' . t('The Infusion User Interface Options module integrates the Infusion UIO component with Drupal.') . '</p>';
+        return $uiohelp;
+        break;
+      }
+  }
+}
