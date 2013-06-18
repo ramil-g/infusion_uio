@@ -13,6 +13,14 @@ function infusion_uio_help($path, $arg) {
     case 'admin/help#infusion_uio': {
         $uiohelp = '<h3>' . t('About') . '</h3>';
         $uiohelp .= '<p>' . t('The Infusion User Interface Options module integrates the Infusion UIO component with Drupal.') . '</p>';
+        $uiohelp .= '<p>' . t('Infusion\'s UI Options component allows users to personalize interfaces and content to meet individual needs and preferences.') . '</p>';
+        $uiohelp .= '<p>' . t('It currently has the following features:') . '<ul>';
+        $uiohelp .= '<li>' . t('Text Size') . '</li>';
+        $uiohelp .= '<li>' . t('Text Style') . '</li>';
+        $uiohelp .= '<li>' . t('Line Spacing') . '</li>';
+        $uiohelp .= '<li>' . t('Colour and Contrast') . '</li>';
+        $uiohelp .= '<li>' . t('Display Table of Contents') . '</li>';
+        $uiohelp .= '<li>' . t('Emphasize Links') . '</li></ul></p>';
         return $uiohelp;
         break;
       }
