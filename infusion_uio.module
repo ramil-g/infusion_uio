@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Integration of the Infusion User Interface Options with Drupal.
@@ -25,4 +24,58 @@ function infusion_uio_help($path, $arg) {
         break;
       }
   }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function infusion_uio_menu() {
+  // Admin config page.
+  $items['admin/config/user-interface/infusion-uio'] = array(
+    'title' => 'Infusion UI Options settings',
+    'description' => 'Configure Infusion User Interface Options',
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('infusion_ui_settings_form'),
+  );
+  
+  return $items;
+}
+
+/**
+ * Implements hook_form().
+ */
+function infusion_ui_settings_form($node, &$form_state) {
+  
+  $uio_options = array(t('Fat Panel Options'), t('Full Page'), t('Full Page With Preview'));
+  $form['infusion_uio_interface'] = array(
+    '#type' => 'radios',
+    '#title' => t('Select the default UIO interface'),
+    '#default_value' => variable_get('infusion_uio_interface', 'Fat Panel Options'),
+    '#options' => drupal_map_assoc($uio_options),
+  );
+  $form['btn_text'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Custom Show/Hide Button Text'),
+    '#description' => t('Customize the Show/Hide button for your UIO'),
+    '#collapsible' => 'TRUE',
+    '#collapsed' => 'TRUE',
+  );
+  $form['btn_text']['infusion_uio_show_btn'] = array(
+    '#type' => 'textfield',
+    '#default_value' => variable_get('infusion_uio_show_btn', 'Preferences'),
+    '#maxlength' => 128,
+    '#required' => TRUE,
+    '#title' => t('Show Button'),
+    '#description' => t('Enter a custom text for the \'Show\' button'),
+  );
+    $form['btn_text']['infusion_uio_hide_btn'] = array(
+    '#type' => 'textfield',
+    '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
+    '#maxlength' => 128,
+    '#required' => TRUE,
+    '#title' => t('Hide Button'),
+    '#description' => t('Enter a custom text for the \'Hide\' button'),
+  );
+  return system_settings_form($form);
 }
