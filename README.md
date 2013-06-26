@@ -3,7 +3,7 @@ infusion_uio
 
 A Drupal module that integrates UI Options into Drupal
 
-Installation Instruction:
+Installation Instructions:
 
 1. Download the module and put in your sites/all/modules folder.
 2. Downlaod the Infusion library from http://builder.fluidproject.org/
