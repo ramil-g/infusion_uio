@@ -45,8 +45,7 @@ function infusion_uio_menu() {
 /**
  * Implements hook_form().
  */
-function infusion_ui_settings_form($node, &$form_state) {
-  
+function infusion_ui_settings_form($node, &$form_state) {  
   $uio_options = array(t('Fat Panel Options'), t('Full Page'), t('Full Page With Preview'));
   $form['infusion_uio_interface'] = array(
     '#type' => 'radios',
@@ -78,4 +77,74 @@ function infusion_ui_settings_form($node, &$form_state) {
     '#description' => t('Enter a custom text for the \'Hide\' button'),
   );
   return system_settings_form($form);
+}
+
+/**
+ * Implements hook_libraries_info().
+ *
+ * For defining external libraries.
+ */
+function infusion_uio_libraries_info() {
+  $libraries['infusion'] = array(
+    'name' => 'Infusion',
+    'vendor url' => 'http://www.fluidproject.org/',
+    'download url' => 'http://builder.fluidproject.org/',
+    'version arguments' => array(
+      'file' => 'ReleaseNotes.txt',
+      'pattern' => '/Infusion\s(\d(.)\d)/',
+      'lines' => 2,
+    ),
+    'files' => array(
+      'js' => array(
+        'MyInfusion.js',
+      ),
+      'css' => array(
+        'framework/fss/css/fss-layout.css',
+        'framework/fss/css/fss-text.css',
+        'components/uiOptions/css/fss/fss-theme-bw-uio.css',
+        'components/uiOptions/css/fss/fss-theme-wb-uio.css',
+        'components/uiOptions/css/fss/fss-theme-by-uio.css',
+        'components/uiOptions/css/fss/fss-theme-yb-uio.css',
+        'components/uiOptions/css/fss/fss-text-uio.css',
+      )
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function infusion_uio_page_alter(&$vars) {
+  //Load the Infusion library
+  drupal_add_library('system', 'ui.tabs');
+  $infusion_lib = libraries_load('infusion');
+  
+  //Define some settings for this module and pass it to Drupal.settings.
+  $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
+  $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
+  $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
+  $uio_path = $infusion_lib['library path'];
+  $uio_settings = array(
+    'uio_interface' => $uio_interface,
+    'fp_show_btn' => $uio_fp_showbtn,
+    'fp_hide_btn' => $uio_fp_hidebtn,
+    'library_path' => $uio_path,
+  );
+      
+  drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
+  //Add this module's javascript file
+  $script = drupal_get_path('module', 'infusion_uio') . '/infusion_uio.js';
+  $options = array('group' => 'JS_THEME');
+  drupal_add_js($script, $options);
+  
+    //dpm($vars);
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function infusion_uio_preprocess_html(&$variables) {
+  $variables['classes_array'][] = 'uio-demo-theme';
+  //dpm($variables);
 }
