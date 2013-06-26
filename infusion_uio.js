@@ -6,11 +6,11 @@
             switch (default_uio) {
                 case 'Fat Panel Options':
                     if ($('div#skip-link')) {
-                        $('div#skip-link').after('<div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div><div class="fl-panelBar"> <button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button> </div> </div>'
+                        $('div#skip-link').after('<div class="flc-uiOptions-fatPanel fl-uiOptions-fatPanel"><div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div><div class="fl-panelBar"> <button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button> </div> </div>'
                                 );
                     } else {
                         $('body').prepend(
-                                '<div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div><div class="fl-panelBar"> <button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button> </div> </div>'
+                                '<div class="flc-uiOptions-fatPanel fl-uiOptions-fatPanel"><div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div><div class="fl-panelBar"> <button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button> </div> </div>'
                                 );
                     }
                     //Start ui options
