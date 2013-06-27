@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Integration of the Infusion User Interface Options with Drupal.
@@ -38,14 +39,14 @@ function infusion_uio_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('infusion_ui_settings_form'),
   );
-  
+
   return $items;
 }
 
 /**
  * Implements hook_form().
  */
-function infusion_ui_settings_form($node, &$form_state) {  
+function infusion_ui_settings_form($node, &$form_state) {
   $uio_options = array(t('Fat Panel Options'), t('Full Page'), t('Full Page With Preview'));
   $form['infusion_uio_interface'] = array(
     '#type' => 'radios',
@@ -68,7 +69,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     '#title' => t('Show Button'),
     '#description' => t('Enter a custom text for the \'Show\' button'),
   );
-    $form['btn_text']['infusion_uio_hide_btn'] = array(
+  $form['btn_text']['infusion_uio_hide_btn'] = array(
     '#type' => 'textfield',
     '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
     '#maxlength' => 128,
@@ -106,6 +107,8 @@ function infusion_uio_libraries_info() {
         'components/uiOptions/css/fss/fss-theme-by-uio.css',
         'components/uiOptions/css/fss/fss-theme-yb-uio.css',
         'components/uiOptions/css/fss/fss-text-uio.css',
+        'lib/jquery/ui/css/fl-theme-hc/hc.css',
+        'lib/jquery/ui/css/fl-theme-hci/hci.css',
       )
     ),
   );
@@ -119,7 +122,7 @@ function infusion_uio_page_alter(&$vars) {
   //Load the Infusion library
   drupal_add_library('system', 'ui.tabs');
   $infusion_lib = libraries_load('infusion');
-  
+
   //Define some settings for this module and pass it to Drupal.settings.
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
@@ -131,20 +134,78 @@ function infusion_uio_page_alter(&$vars) {
     'fp_hide_btn' => $uio_fp_hidebtn,
     'library_path' => $uio_path,
   );
-      
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
+  
   //Add this module's javascript file
-  $script = drupal_get_path('module', 'infusion_uio') . '/infusion_uio.js';
-  $options = array('scope' => 'footer');
+  $script = drupal_get_path('module', 'infusion_uio') . '/functions.js';
+  $options = array('group' => 'JS_DEFAULT');
   drupal_add_js($script, $options);
   
-    //dpm($infusion_lib);
+  
+  //dpm($infusion_lib);
 }
 
 /**
  * Implements hook_preprocess_html().
  */
 function infusion_uio_preprocess_html(&$variables) {
+  //Add the Page Enhancer class to body tag
   $variables['classes_array'][] = 'uio-demo-theme';
-  //dpm($variables);
+
+  //Add the container divs for the different UIO versions
+  $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
+  switch ($uio_interface) {
+    case 'Fat Panel Options':
+      $variables['page']['page_top']['uio_fat_panel'] = array(
+        '#markup' => '<div class="flc-uiOptions-fatPanel fl-uiOptions-fatPanel"> 
+                      <div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div>
+                      <div class="fl-panelBar"><button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button></div>
+                      </div>',
+        '#weight' => 2,
+      );
+      break;
+    case 'Full Page':
+
+      break;
+    case 'Full Page With Preview':
+
+      break;
+  }
+
+  //Add the container div for the Infusion Table of Contents
+  $variables['page']['page_top']['uio_toc'] = array(
+    '#markup' => '<div class="flc-toc-tocContainer"> </div>',
+    '#weight' => 3,
+  );
+
+  //Make sure the admin toolbar if enabled remains at the top
+  if ($variables['page']['page_top']['toolbar']) {
+    $variables['page']['page_top']['toolbar']['#weight'] = 1;
+  }
+  
+  //Testing some code . DELETE LATER
+//  $infusion_lib = libraries_load('infusion');
+//  $uio_path = $infusion_lib['library path'];
+//  $inlinescript = '<script type="text/javascript"> // Instantiate the UI Enhancer component, specifying the table of contents\' template URL 
+//fluid.pageEnhancer({
+//                // Specify the default theme class name 
+//                classnameMap: {
+//                    theme: {"default": "uio-demo-theme"}
+//                },
+//                // Specify the table of contents\' template URL 
+//                tocTemplate:\'';
+//      $inlinescript .=  $uio_path;
+//      $inlinescript .= '/components/tableOfContents/html/TableOfContents.html\'});';
+//      $inlinescript .= '//Start UI Options
+//        ';
+//      $inlinescript .= 'fluid.uiOptions.fatPanel(".flc-uiOptions-fatPanel", { prefix: "';
+//      $inlinescript .=  $uio_path;
+//      $inlinescript .= '/components/uiOptions/html/" });</script>';
+//      
+//        $variables['page']['page_top']['uio_inline'] = array(
+//    '#markup' => $inlinescript,
+//    '#weight' => 4,
+//  );
+  
+  $variables['page']['page_top']['#sorted'] = FALSE;
 }
