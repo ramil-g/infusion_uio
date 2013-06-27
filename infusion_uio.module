@@ -137,9 +137,14 @@ function infusion_uio_page_alter(&$vars) {
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
   
   //Add this module's javascript file
-  $script = drupal_get_path('module', 'infusion_uio') . '/functions.js';
-  $options = array('group' => 'JS_DEFAULT');
+  $script = drupal_get_path('module', 'infusion_uio') . '/functions1.5.js';
+  $options = array('scope' => 'footer');
   drupal_add_js($script, $options);
+  
+  //Add another js file
+    $script2 = drupal_get_path('module', 'infusion_uio') . '/orig-infusion_uio.js';
+  $options2 = array('scope' => 'footer');
+  drupal_add_js($script2, $options2);
   
   
   //dpm($infusion_lib);
