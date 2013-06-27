@@ -14,7 +14,7 @@
                                 );
                     }
                     //Start ui options
-                    fluid.uiOptions.fatPanel(".flc-uiOptions-fatPanel", {prefix: settings.infusion_uio.library_path + 'components/uiOptions/html'});
+                    fluid.uiOptions.fatPanel(".flc-uiOptions-fatPanel", {prefix: settings.infusion_uio.library_path + '/components/uiOptions/html'});
                     break;
             }
 

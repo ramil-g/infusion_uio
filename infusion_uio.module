@@ -135,10 +135,10 @@ function infusion_uio_page_alter(&$vars) {
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
   //Add this module's javascript file
   $script = drupal_get_path('module', 'infusion_uio') . '/infusion_uio.js';
-  $options = array('group' => 'JS_THEME');
+  $options = array('scope' => 'footer');
   drupal_add_js($script, $options);
   
-    //dpm($vars);
+    //dpm($infusion_lib);
 }
 
 /**
