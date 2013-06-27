@@ -149,6 +149,8 @@ function infusion_uio_page_alter(&$vars) {
  * Implements hook_preprocess_html().
  */
 function infusion_uio_preprocess_html(&$variables) {
+    $infusion_lib = libraries_load('infusion');
+    $uio_path = $infusion_lib['library path'];
   //Add the Page Enhancer class to body tag
   $variables['classes_array'][] = 'uio-demo-theme';
 
@@ -161,6 +163,9 @@ function infusion_uio_preprocess_html(&$variables) {
                       <div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div>
                       <div class="fl-panelBar"><button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button></div>
                       </div>',
+        '#attached' => array(
+          'css' => array($uio_path . '/components/uiOptions/css/FatPanelUIOptions.css')
+        ),
         '#weight' => 2,
       );
       break;
@@ -184,8 +189,7 @@ function infusion_uio_preprocess_html(&$variables) {
   }
   
   //Testing some code . DELETE LATER
-//  $infusion_lib = libraries_load('infusion');
-//  $uio_path = $infusion_lib['library path'];
+
 //  $inlinescript = '<script type="text/javascript"> // Instantiate the UI Enhancer component, specifying the table of contents\' template URL 
 //fluid.pageEnhancer({
 //                // Specify the default theme class name 
