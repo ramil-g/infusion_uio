@@ -3,3 +3,4 @@ description = Integrates Infusion's UIO component with Drupal.
 core = 7.x
 configure = admin/config/user-interface/infusion-uio
 dependencies[] = libraries
+dependencies[] = jquery_update
