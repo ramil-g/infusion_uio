@@ -107,8 +107,8 @@ function infusion_uio_libraries_info() {
         'components/uiOptions/css/fss/fss-theme-by-uio.css',
         'components/uiOptions/css/fss/fss-theme-yb-uio.css',
         'components/uiOptions/css/fss/fss-text-uio.css',
-        'lib/jquery/ui/css/fl-theme-hc/hc.css',
-        'lib/jquery/ui/css/fl-theme-hci/hci.css',
+//        'lib/jquery/ui/css/fl-theme-hc/hc.css',
+//        'lib/jquery/ui/css/fl-theme-hci/hci.css',
       )
     ),
   );
@@ -121,13 +121,13 @@ function infusion_uio_libraries_info() {
 function infusion_uio_page_alter(&$vars) {
   //Load the Infusion library
   drupal_add_library('system', 'ui.tabs');
-  $infusion_lib = libraries_load('infusion');
-
+  libraries_load('infusion');
+  $lib_path = libraries_get_path('infusion');
   //Define some settings for this module and pass it to Drupal.settings.
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
-  $uio_path = $infusion_lib['library path'];
+  $uio_path = $lib_path;
   $uio_settings = array(
     'uio_interface' => $uio_interface,
     'fp_show_btn' => $uio_fp_showbtn,
@@ -135,18 +135,17 @@ function infusion_uio_page_alter(&$vars) {
     'library_path' => $uio_path,
   );
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
-  
+
   //Add this module's javascript file
   $script = drupal_get_path('module', 'infusion_uio') . '/functions1.5.js';
   $options = array('scope' => 'footer');
   drupal_add_js($script, $options);
-  
+
   //Add another js file
-    $script2 = drupal_get_path('module', 'infusion_uio') . '/orig-infusion_uio.js';
+  $script2 = drupal_get_path('module', 'infusion_uio') . '/orig-infusion_uio.js';
   $options2 = array('scope' => 'footer');
   drupal_add_js($script2, $options2);
-  
-  
+
   //dpm($infusion_lib);
 }
 
@@ -154,8 +153,8 @@ function infusion_uio_page_alter(&$vars) {
  * Implements hook_preprocess_html().
  */
 function infusion_uio_preprocess_html(&$variables) {
-    $infusion_lib = libraries_load('infusion');
-    $uio_path = $infusion_lib['library path'];
+  $uio_path = libraries_get_path('infusion');
+
   //Add the Page Enhancer class to body tag
   $variables['classes_array'][] = 'uio-demo-theme';
 
@@ -181,7 +180,6 @@ function infusion_uio_preprocess_html(&$variables) {
 
       break;
   }
-
   //Add the container div for the Infusion Table of Contents
   $variables['page']['page_top']['uio_toc'] = array(
     '#markup' => '<div class="flc-toc-tocContainer"> </div>',
@@ -192,29 +190,6 @@ function infusion_uio_preprocess_html(&$variables) {
   if ($variables['page']['page_top']['toolbar']) {
     $variables['page']['page_top']['toolbar']['#weight'] = 1;
   }
-  
-  //Testing some code . DELETE LATER
 
-//  $inlinescript = '<script type="text/javascript"> // Instantiate the UI Enhancer component, specifying the table of contents\' template URL 
-//fluid.pageEnhancer({
-//                // Specify the default theme class name 
-//                classnameMap: {
-//                    theme: {"default": "uio-demo-theme"}
-//                },
-//                // Specify the table of contents\' template URL 
-//                tocTemplate:\'';
-//      $inlinescript .=  $uio_path;
-//      $inlinescript .= '/components/tableOfContents/html/TableOfContents.html\'});';
-//      $inlinescript .= '//Start UI Options
-//        ';
-//      $inlinescript .= 'fluid.uiOptions.fatPanel(".flc-uiOptions-fatPanel", { prefix: "';
-//      $inlinescript .=  $uio_path;
-//      $inlinescript .= '/components/uiOptions/html/" });</script>';
-//      
-//        $variables['page']['page_top']['uio_inline'] = array(
-//    '#markup' => $inlinescript,
-//    '#weight' => 4,
-//  );
-  
   $variables['page']['page_top']['#sorted'] = FALSE;
 }
