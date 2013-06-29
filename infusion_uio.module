@@ -122,17 +122,16 @@ function infusion_uio_page_alter(&$vars) {
   //Load the Infusion library
   drupal_add_library('system', 'ui.tabs');
   libraries_load('infusion');
-  $lib_path = libraries_get_path('infusion');
+$lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
   //Define some settings for this module and pass it to Drupal.settings.
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
-  $uio_path = $lib_path;
   $uio_settings = array(
     'uio_interface' => $uio_interface,
     'fp_show_btn' => $uio_fp_showbtn,
     'fp_hide_btn' => $uio_fp_hidebtn,
-    'library_path' => $uio_path,
+    'library_path' => $lib_path,
   );
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
 
@@ -146,26 +145,29 @@ function infusion_uio_page_alter(&$vars) {
   $options2 = array('scope' => 'footer');
   drupal_add_js($script2, $options2);
 
-  //dpm($infusion_lib);
 }
 
 /**
  * Implements hook_preprocess_html().
  */
 function infusion_uio_preprocess_html(&$variables) {
-  $uio_path = libraries_get_path('infusion');
+  //setup some variables
+  $uio_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
 
   //Add the Page Enhancer class to body tag
   $variables['classes_array'][] = 'uio-demo-theme';
 
-  //Add the container divs for the different UIO versions
+  //Add the container divs for the different UIOs
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   switch ($uio_interface) {
     case 'Fat Panel Options':
       $variables['page']['page_top']['uio_fat_panel'] = array(
         '#markup' => '<div class="flc-uiOptions-fatPanel fl-uiOptions-fatPanel"> 
                       <div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div>
-                      <div class="fl-panelBar"><button class="flc-slidingPanel-toggleButton fl-toggleButton">The show/hide button label will go here</button></div>
+                      <div class="fl-panelBar"><span class="fl-uio-tabs">
+	                <button id="reset" class="flc-uiOptions-reset fl-uiOptions-reset"><span class="fl-icon-undo"></span> Reset</button>
+	            	<button id="show-hide" class="flc-slidingPanel-toggleButton fl-uiOptions-showHide"> Show/Hide</button>
+            	</span></div>
                       </div>',
         '#attached' => array(
           'css' => array($uio_path . '/components/uiOptions/css/FatPanelUIOptions.css')
@@ -187,7 +189,7 @@ function infusion_uio_preprocess_html(&$variables) {
   );
 
   //Make sure the admin toolbar if enabled remains at the top
-  if ($variables['page']['page_top']['toolbar']) {
+  if (array_key_exists('toolbar', $variables['page']['page_top'])) {
     $variables['page']['page_top']['toolbar']['#weight'] = 1;
   }
 
