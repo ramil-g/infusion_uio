@@ -39,6 +39,14 @@ function infusion_uio_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('infusion_ui_settings_form'),
   );
+  $items['uio_full_page'] = array(
+    'title' => 'Infusion UI Options Full Page Without Preview',
+    'description' => 'Configure Infusion User Interface Options',
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+    'page callback' => 'infusion_uio_fullpage',
+    'type' => MENU_CALLBACK,
+  );
 
   return $items;
 }
@@ -47,37 +55,144 @@ function infusion_uio_menu() {
  * Implements hook_form().
  */
 function infusion_ui_settings_form($node, &$form_state) {
+
+  $defaultvalue = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_options = array(t('Fat Panel Options'), t('Full Page'), t('Full Page With Preview'));
   $form['infusion_uio_interface'] = array(
     '#type' => 'radios',
     '#title' => t('Select the default UIO interface'),
     '#default_value' => variable_get('infusion_uio_interface', 'Fat Panel Options'),
     '#options' => drupal_map_assoc($uio_options),
+    '#ajax' => array(
+      'callback' => 'infusion_uio_moreoptions_ajax',
+      'wrapper' => 'infusion_uio_moreoptions',
+      'method' => 'replace',
+    )
   );
-  $form['btn_text'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Custom Show/Hide Button Text'),
-    '#description' => t('Customize the Show/Hide button for your UIO'),
-    '#collapsible' => 'TRUE',
-    '#collapsed' => 'TRUE',
+  $form['infusion_uio_more'] = array(
+    '#type' => 'markup',
+    '#prefix' => '<div id="infusion_uio_moreoptions">',
+    '#suffix' => '</div>',
   );
-  $form['btn_text']['infusion_uio_show_btn'] = array(
-    '#type' => 'textfield',
-    '#default_value' => variable_get('infusion_uio_show_btn', 'Preferences'),
-    '#maxlength' => 128,
-    '#required' => TRUE,
-    '#title' => t('Show Button'),
-    '#description' => t('Enter a custom text for the \'Show\' button'),
-  );
-  $form['btn_text']['infusion_uio_hide_btn'] = array(
-    '#type' => 'textfield',
-    '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
-    '#maxlength' => 128,
-    '#required' => TRUE,
-    '#title' => t('Hide Button'),
-    '#description' => t('Enter a custom text for the \'Hide\' button'),
-  );
+  //Check which value was selected from above and present users with more options according to their choice.
+  if ($defaultvalue == 'Fat Panel Options' && empty($form_state['values']['infusion_uio_interface'])) {
+    $form['infusion_uio_more']['#type'] = 'fieldset';
+    $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $defaultvalue));
+    $form['infusion_uio_more']['infusion_uio_show_btn'] = array(
+      '#type' => 'textfield',
+      '#default_value' => variable_get('infusion_uio_show_btn', 'Preferences'),
+      '#maxlength' => 128,
+      '#required' => TRUE,
+      '#title' => t('Show Button'),
+      '#description' => t('Enter a custom text for the \'Show\' button'),
+    );
+    $form['infusion_uio_more']['infusion_uio_hide_btn'] = array(
+      '#type' => 'textfield',
+      '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
+      '#maxlength' => 128,
+      '#required' => TRUE,
+      '#title' => t('Hide Button'),
+      '#description' => t('Enter a custom text for the \'Hide\' button'),
+    );
+  }
+  elseif ($defaultvalue == 'Full Page' && empty($form_state['values']['infusion_uio_interface'])) {
+    $form['infusion_uio_more']['#type'] = 'fieldset';
+    $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $defaultvalue));
+    $form['infusion_uio_more']['infusion_uio_fullpage_block'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use block for the link to the Full Page UI Options'),
+      '#description' => t('You can use a block for the link to the Full Page UI Options and configure where you want to place it in the block settings page'),
+      '#default_value' => variable_get('infusion_uio_fullpage_block', 0),
+    );
+  }
+  elseif ($defaultvalue == 'Full Page With Preview' && empty($form_state['values']['infusion_uio_interface'])) {
+    $form['infusion_uio_more']['#type'] = 'fieldset';
+    $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $defaultvalue));
+    $form['infusion_uio_more']['infusion_uio_fullpagepreview_block'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use block for the link to the Full Page UI Options'),
+      '#description' => t('You can use a block for the link to the Full Page with Preview UI Options and configure where you want to place it in the block settings page'),
+      '#default_value' => variable_get('infusion_uio_fullpagepreview_block', 0),
+    );
+  }
+  //Populate the more options for the ajax callback
+  if (!empty($form_state['values']['infusion_uio_interface']) && $form_state['values']['infusion_uio_interface'] == 'Fat Panel Options') {
+    $form['infusion_uio_more']['#type'] = 'fieldset';
+    $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $form_state['values']['infusion_uio_interface']));
+    $form['infusion_uio_more']['infusion_uio_show_btn'] = array(
+      '#type' => 'textfield',
+      '#default_value' => variable_get('infusion_uio_show_btn', 'Preferences'),
+      '#maxlength' => 128,
+      '#required' => TRUE,
+      '#title' => t('Show Button'),
+      '#description' => t('Enter a custom text for the \'Show\' button'),
+    );
+    $form['infusion_uio_more']['infusion_uio_hide_btn'] = array(
+      '#type' => 'textfield',
+      '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
+      '#maxlength' => 128,
+      '#required' => TRUE,
+      '#title' => t('Hide Button'),
+      '#description' => t('Enter a custom text for the \'Hide\' button'),
+    );
+  }
+  elseif (!empty($form_state['values']['infusion_uio_interface']) && $form_state['values']['infusion_uio_interface'] == 'Full Page') {
+    $form['infusion_uio_more']['#type'] = 'fieldset';
+    $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $form_state['values']['infusion_uio_interface']));
+    $form['infusion_uio_more']['infusion_uio_fullpage_block'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use block for the link to the Full Page UI Options'),
+      '#description' => t('You can use a block for the link to the Full Page UI Options and configure where you want to place it in the block settings page'),
+      '#default_value' => variable_get('infusion_uio_fullpage_block', 0),
+    );
+  }
+  elseif (!empty($form_state['values']['infusion_uio_interface']) && $form_state['values']['infusion_uio_interface'] == 'Full Page With Preview') {
+
+    $form['infusion_uio_more']['#type'] = 'fieldset';
+    $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $form_state['values']['infusion_uio_interface']));
+    $form['infusion_uio_more']['infusion_uio_fullpagepreview_block'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use block for the link to the Full Page with Preview UI Options'),
+      '#description' => t('You can use a block for the link to the Full Page with Preview UI Options and configure where you want to place it in the block settings page'),
+      '#default_value' => variable_get('infusion_uio_fullpagepreview_block', 0),
+    );
+  }
+
   return system_settings_form($form);
+}
+
+/**
+ * Ajax  callback for admin settings form.
+ */
+function infusion_uio_moreoptions_ajax($form, $form_state) {
+  return $form['infusion_uio_more'];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function infusion_uio_block_info() {
+  $blocks['infusion_uio_link'] = array(
+    'info' => t('UI Options Link'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function infusion_uio_block_view($delta ='') {
+  if ($delta == 'infusion_uio_link') {
+    if (variable_get('infusion_uio_interface') == 'Full Page') {
+      $content = l( 'UI Options', 'uio_full_page');
+    }
+  }
+  $block = array(
+    'subject' => t('Infusion UIO'),
+    'content' => $content,
+  );
+  return $block;
 }
 
 /**
@@ -107,8 +222,6 @@ function infusion_uio_libraries_info() {
         'components/uiOptions/css/fss/fss-theme-by-uio.css',
         'components/uiOptions/css/fss/fss-theme-yb-uio.css',
         'components/uiOptions/css/fss/fss-text-uio.css',
-//        'lib/jquery/ui/css/fl-theme-hc/hc.css',
-//        'lib/jquery/ui/css/fl-theme-hci/hci.css',
       )
     ),
   );
@@ -122,7 +235,7 @@ function infusion_uio_page_alter(&$vars) {
   //Load the Infusion library
   drupal_add_library('system', 'ui.tabs');
   libraries_load('infusion');
-$lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
+  $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
   //Define some settings for this module and pass it to Drupal.settings.
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
@@ -135,16 +248,21 @@ $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
   );
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
 
-  //Add this module's javascript file
-  $script = drupal_get_path('module', 'infusion_uio') . '/functions1.5.js';
-  $options = array('scope' => 'footer');
-  drupal_add_js($script, $options);
-
+  //Add the correct javascript file
+  if (current_path() == 'uio_full_page') {
+    $script = drupal_get_path('module', 'infusion_uio') . '/fullpage.js';
+    $options = array('scope' => 'footer');
+    drupal_add_js($script, $options);
+  }
+  elseif (variable_get('infusion_uio_interface') == 'Fat Panel Options') {
+    $script = drupal_get_path('module', 'infusion_uio') . '/fatpanel.js';
+    $options = array('scope' => 'footer');
+    drupal_add_js($script, $options);
+  }
   //Add another js file
   $script2 = drupal_get_path('module', 'infusion_uio') . '/orig-infusion_uio.js';
   $options2 = array('scope' => 'footer');
   drupal_add_js($script2, $options2);
-
 }
 
 /**
@@ -170,13 +288,22 @@ function infusion_uio_preprocess_html(&$variables) {
             	</span></div>
                       </div>',
         '#attached' => array(
-          'css' => array($uio_path . '/components/uiOptions/css/FatPanelUIOptions.css')
+          'css' => array($uio_path . '/components/uiOptions/css/FatPanelUIOptions.css'),
         ),
         '#weight' => 2,
       );
       break;
     case 'Full Page':
-
+      $variables['page']['page_top']['uio_fullpage'] = array(
+        '#theme' => 'link',
+        '#text' => t('User Interface Options'),
+        '#path' => 'uio_full_page',
+        '#options' => array(
+          'attributes' => array(),
+          'html' => FALSE,
+        ),
+        '#weight' => 2,
+      );
       break;
     case 'Full Page With Preview':
 
@@ -194,4 +321,26 @@ function infusion_uio_preprocess_html(&$variables) {
   }
 
   $variables['page']['page_top']['#sorted'] = FALSE;
+}
+
+/**
+ * Page Callback: Displays the Infusion UIO Full Page without Preview.
+ * 
+ * @see infusion_uio_menu()
+ */
+function infusion_uio_fullpage() {
+
+  $uio_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
+  $options = array(
+    'group' => CSS_DEFAULT,
+    'type' => 'file',
+  );
+  drupal_add_css($uio_path . '/components/uiOptions/css/FullUIOptions.css', $options);
+  drupal_add_css($uio_path . '/components/uiOptions/css/FullNoPreviewUIOptions.css', $options);
+
+  $output = array(
+    '#markup' => '<h1>User Interface Options</h1>        
+            <div id="myUIOptions"></div>',
+  );
+  return $output;
 }
