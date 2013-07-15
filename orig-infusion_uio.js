@@ -84,13 +84,13 @@ var demo = demo || {};
         prefix: pathToTemplates,
         templateLoader: {
             options: {
-                gradeNames: ["fluid.uiOptions.defaultTemplateLoader"]
+                gradeNames: ["fluid.uiOptions.starterTemplateLoader"]
             }
         },
         // Tell UIOptions where to redirect to if the user cancels the operation
         uiOptions: {
             options: {
-                gradeNames: ["fluid.uiOptions.defaultSettingsPanels"],
+                gradeNames: ["fluid.uiOptions.starterPanels", "fluid.uiOptions.rootModel.starter", "fluid.uiOptions.uiEnhancerRelay"],
                 listeners: {
                     onCancel: function () {
                         alert("Cancelled - would normally cancel any unsaved changes and return to the previous page.");

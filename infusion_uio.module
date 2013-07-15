@@ -186,6 +186,8 @@ function infusion_uio_block_view($delta ='') {
   if ($delta == 'infusion_uio_link') {
     if (variable_get('infusion_uio_interface') == 'Full Page') {
       $content = l( 'UI Options', 'uio_full_page');
+    } else {
+      $content = '';
     }
   }
   $block = array(
