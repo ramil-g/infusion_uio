@@ -236,6 +236,11 @@ function infusion_uio_libraries_info() {
 function infusion_uio_page_alter(&$vars) {
   //Load the Infusion library
   drupal_add_library('system', 'ui.tabs');
+  drupal_add_library('system', 'ui.widget');
+  drupal_add_library('system', 'ui.slider');
+  drupal_add_library('system', 'ui.dialog');
+  drupal_add_library('system', 'ui.draggable');
+  drupal_add_library('system', 'ui.mouse');
   libraries_load('infusion');
   $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
   //Define some settings for this module and pass it to Drupal.settings.
