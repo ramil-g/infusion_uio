@@ -19,6 +19,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 var demo = demo || {};
 (function ($, fluid) {       
 
+    // Register into the environment the fact that the environment includes the Drupal UIO module
+    fluid.staticEnvironment["drupal--uio--module"] = fluid.typeTag("drupal.uio.module");
+
+    // tell the iFrame renderer to use my custom file when we're in environment of the module
+    fluid.demands("fluid.uiOptions.fatPanel.renderIframe", ["drupal.uio.module"], {
+        markupProps: {
+            src: Drupal.settings.infusion_uio.fatpanel_frame
+        }
+    });
+
     /**
      * The UI Options interface is defined by several HTML templates. The component
      * needs to know where those templates are. This variable will be used by all
@@ -100,6 +110,7 @@ var demo = demo || {};
         }
     };
     
+
     /**
      * Initialize UI Options on the "Fat Panel" version. This version of UI Options uses the
      * page itself as a live preview.

@@ -4,3 +4,4 @@ core = 7.x
 configure = admin/config/user-interface/infusion-uio
 dependencies[] = libraries
 dependencies[] = jquery_update
+files[] = FatPanelUIOptionsFrame.php

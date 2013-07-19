@@ -1,3 +1,8 @@
+/**
+* @file
+* The javascript file for the Fat Panel UIO.
+*/
+
 (function($) {
     Drupal.behaviors.infusion_uio = {
         attach: function(context, settings) {

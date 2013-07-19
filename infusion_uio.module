@@ -185,7 +185,7 @@ function infusion_uio_block_info() {
 function infusion_uio_block_view($delta = '') {
   if ($delta == 'infusion_uio_link') {
     if (variable_get('infusion_uio_interface') == 'Full Page') {
-      $content = l('UI Options', 'uio_full_page');
+      $content = l(t('UI Options'), 'uio_full_page');
     }
     else {
       $content = '';
@@ -227,11 +227,11 @@ function infusion_uio_libraries_info() {
         'components/uiOptions/css/fss/fss-theme-slate-uio.css',
         'components/uiOptions/css/fss/fss-theme-wb-uio.css',
         'components/uiOptions/css/fss/fss-theme-yb-uio.css',
-        'components/uiOptions/css/FatPanelUIOptions.css',
-        'components/uiOptions/css/FatPanelUIOptionsFrame.css',
-        'components/uiOptions/css/FullNoPreviewUIOptions.css',
-        'components/uiOptions/css/FullPreviewUIOptions.css',
-        'components/uiOptions/css/FullUIOptions.css',
+//        'components/uiOptions/css/FatPanelUIOptions.css',
+//        'components/uiOptions/css/FatPanelUIOptionsFrame.css',
+//        'components/uiOptions/css/FullNoPreviewUIOptions.css',
+//        'components/uiOptions/css/FullPreviewUIOptions.css',
+//        'components/uiOptions/css/FullUIOptions.css',
         'components/uiOptions/css/ie8.css',
         'components/uiOptions/css/UIOptions.css',
         'framework/fss/css/fss-base-context.css',
@@ -278,6 +278,7 @@ function infusion_uio_page_alter(&$vars) {
   libraries_load('infusion');
   $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
   //Define some settings for this module and pass it to Drupal.settings.
+  $fatpanel_frame = drupal_get_path('module', 'infusion_uio') . '/FatPanelUIOptionsFrame.php';
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
@@ -286,6 +287,7 @@ function infusion_uio_page_alter(&$vars) {
     'fp_show_btn' => $uio_fp_showbtn,
     'fp_hide_btn' => $uio_fp_hidebtn,
     'library_path' => $lib_path,
+    'fatpanel_frame' => $fatpanel_frame,
   );
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
 
@@ -302,7 +304,7 @@ function infusion_uio_page_alter(&$vars) {
     drupal_add_js($script, $options);
   }
   //Add another js file
-  $script2 = drupal_get_path('module', 'infusion_uio') . '/orig-infusion_uio.js';
+  $script2 = drupal_get_path('module', 'infusion_uio') . '/functions.js';
   $options2 = array('scope' => 'footer');
   drupal_add_js($script2, $options2);
 }
@@ -385,4 +387,43 @@ function infusion_uio_fullpage() {
             <div id="myUIOptions"></div>',
   );
   return $output;
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function infusion_uio_page_build(&$page) {
+  $node = current_path();
+  $lib_path = libraries_get_path('infusion');
+  if ($node == 'uio_full_page' || variable_get('infusion_uio_interface') == 'Full Page') {
+    $page['content']['#attached'] = array(
+      'css' => array($lib_path . '/components/uiOptions/css/FullNoPreviewUIOptions.css',
+        $lib_path . '/components/uiOptions/css/FullUIOptions.css',
+      )
+    );
+  }
+  elseif (variable_get('infusion_uio_interface') == 'Fat Panel Options') {
+    $page['content']['#attached'] = array(
+      'css' => array($lib_path . '/components/uiOptions/css/FatPanelUIOptions.css',
+        $lib_path . '/components/uiOptions/css/FatPanelUIOptionsFrame.css',
+      )
+    );
+  }
+  else {
+    return;
+  }
+  //dpm($page);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function infusion_uio_theme($existing, $type, $theme, $path) {
+  return array(
+    'theme_name' => array(
+      'variables' => array(
+        'options' => NULL,
+      ),
+      'template' => 'theme-name'
+  ));
 }
