@@ -9,7 +9,9 @@
 
             demo.initSettingsStore();
             demo.initPageEnhancer("uio-demo-theme");
-            if (Drupal.settings.infusion_uio.uio_interface == 'Full Page') {
+            
+            var curpath = $(location).attr('href');
+            if (curpath.indexOf('uio_full_page') >= 0) {
                 demo.initFullNoPreview("#myUIOptions");
             }
         }

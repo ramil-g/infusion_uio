@@ -1,7 +1,7 @@
 name = Infusion User Interface Options
-description = Integrates Infusion's UIO component with Drupal.
+description = Provides users with options to customize the appearance of the page.
 core = 7.x
 configure = admin/config/user-interface/infusion-uio
 dependencies[] = libraries
 dependencies[] = jquery_update
-files[] = FatPanelUIOptionsFrame.php
+; stylesheets[all][] = infusion_uio.css

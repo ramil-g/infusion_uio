@@ -24,8 +24,10 @@ var demo = demo || {};
 
     // tell the iFrame renderer to use my custom file when we're in environment of the module
     fluid.demands("fluid.uiOptions.fatPanel.renderIframe", ["drupal.uio.module"], {
-        markupProps: {
-            src: Drupal.settings.infusion_uio.fatpanel_frame
+        options: {
+            markupProps: {
+                src: Drupal.settings.infusion_uio.fatpanel_frame
+            }
         }
     });
 
@@ -57,7 +59,7 @@ var demo = demo || {};
      */
     demo.initPageEnhancer = function (customThemeName) {
         fluid.pageEnhancer({
-            gradeNames: ["fluid.uiEnhancer.starterActions"],
+            gradeNames: ["fluid.uiEnhancer.starterEnactors"],
             tocTemplate: pathToTocTemplate,
             classnameMap: {
                 theme: {

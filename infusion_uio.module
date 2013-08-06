@@ -47,6 +47,22 @@ function infusion_uio_menu() {
     'page callback' => 'infusion_uio_fullpage',
     'type' => MENU_CALLBACK,
   );
+  $items['uio_full_page_preview'] = array(
+    'title' => 'Infusion UI Options Full Page With Preview',
+    'description' => 'Configure Infusion User Interface Options',
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+    'page callback' => 'infusion_uio_fullpage_preview',
+    'type' => MENU_CALLBACK,
+  );
+  $items['uio_fatpanel_frame'] = array(
+    'title' => 'Fat Panel Frame',
+    'description' => 'Configure Infusion User Interface Options',
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+    'page callback' => 'uio_fatpanel_frame',
+    'type' => MENU_CALLBACK,
+  );
 
   return $items;
 }
@@ -277,24 +293,26 @@ function infusion_uio_page_alter(&$vars) {
   drupal_add_library('system', 'ui.position');
   libraries_load('infusion');
   $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
+
   //Define some settings for this module and pass it to Drupal.settings.
-  $fatpanel_frame = drupal_get_path('module', 'infusion_uio') . '/FatPanelUIOptionsFrame.php';
+  $fatpanel_frame = 'uio_fatpanel_frame';
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
+  $uio_iframe_html = file_create_url('public://front.html');
   $uio_settings = array(
     'uio_interface' => $uio_interface,
     'fp_show_btn' => $uio_fp_showbtn,
     'fp_hide_btn' => $uio_fp_hidebtn,
     'library_path' => $lib_path,
     'fatpanel_frame' => $fatpanel_frame,
+    'full_preview_iframe' => $uio_iframe_html,
   );
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
 
   //Add the correct javascript file
-  if (current_path() == 'uio_full_page') {
-    libraries_get_path('infusion') .
-        $script = drupal_get_path('module', 'infusion_uio') . '/fullpage.js';
+  if (current_path() == 'uio_full_page' || variable_get('infusion_uio_interface') == 'Full Page') {
+    libraries_get_path('infusion') . $script = drupal_get_path('module', 'infusion_uio') . '/fullpage.js';
     $options = array('scope' => 'footer');
     drupal_add_js($script, $options);
   }
@@ -350,7 +368,16 @@ function infusion_uio_preprocess_html(&$variables) {
       );
       break;
     case 'Full Page With Preview':
-
+      $variables['page']['page_top']['uio_fullpage'] = array(
+        '#theme' => 'link',
+        '#text' => t('User Interface Options'),
+        '#path' => 'uio_full_page_preview',
+        '#options' => array(
+          'attributes' => array(),
+          'html' => FALSE,
+        ),
+        '#weight' => 2,
+      );
       break;
   }
   //Add the container div for the Infusion Table of Contents
@@ -374,13 +401,21 @@ function infusion_uio_preprocess_html(&$variables) {
  */
 function infusion_uio_fullpage() {
 
-//  $uio_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
-//  $options = array(
-//    'group' => CSS_DEFAULT,
-//    'type' => 'file',
-//  );
-//  drupal_add_css($uio_path . '/components/uiOptions/css/FullUIOptions.css', $options);
-//  drupal_add_css($uio_path . '/components/uiOptions/css/FullNoPreviewUIOptions.css', $options);
+  $output = array(
+    '#markup' => '<h1>User Interface Options</h1>        
+            <div id="myUIOptions"></div>',
+  );
+  return $output;
+}
+
+/**
+ * Page Callback: Displays the Infusion UIO Full Page with Preview.
+ * 
+ * @see infusion_uio_menu()
+ */
+function infusion_uio_fullpage_preview() {
+
+  to_html();
 
   $output = array(
     '#markup' => '<h1>User Interface Options</h1>        
@@ -390,14 +425,71 @@ function infusion_uio_fullpage() {
 }
 
 /**
+ * Page Callback: The Fat Panel Frame callback.
+ * 
+ * @see infusion_uio_menu()
+ */
+function uio_fatpanel_frame() {
+
+//get path to infusion library
+  $infusion = libraries_get_path('infusion');
+
+  $output = '<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:rsf="http://ponder.org.uk/rsf">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/framework/fss/css/fss-reset-global.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/framework/fss/css/fss-base-global.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/framework/fss/css/fss-layout.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/framework/fss/css/fss-text.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-theme-bw-uio.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-theme-wb-uio.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-theme-by-uio.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-theme-yb-uio.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-text-uio.css" />';
+
+  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-bw/bw.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-wb/wb.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-by/by.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-yb/yb.css" />';
+
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/UIOptions.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/FatPanelUIOptionsFrame.css" />';
+
+
+  $output .= '<!--[if IE 8]>
+        <link rel="stylesheet" type="text/css" href="../css/ie8.css" />
+    <![endif]--> ';
+  $output .= '<title>UI Options</title>';
+  $output .= '<script type="text/javascript" src="' . $infusion . '/MyInfusion.js' . '"></script></head>';
+  $output .= '  <body class="fl-uiOptions-fatPanel fl-focus">
+    <span class="fl-hidden">
+      <div class="flc-toc-tocContainer"></div>
+    </span>
+  </body>
+</html>';
+
+  print $output;
+  drupal_exit();
+}
+
+/**
  * Implements hook_page_build().
  */
 function infusion_uio_page_build(&$page) {
   $node = current_path();
   $lib_path = libraries_get_path('infusion');
-  if ($node == 'uio_full_page' || variable_get('infusion_uio_interface') == 'Full Page') {
+  drupal_add_css(drupal_get_path('module', 'infusion_uio') . '/infusion_uio.css', array('group' => CSS_THEME));
+  if ($node == 'uio_full_page') {
     $page['content']['#attached'] = array(
       'css' => array($lib_path . '/components/uiOptions/css/FullNoPreviewUIOptions.css',
+        $lib_path . '/components/uiOptions/css/FullUIOptions.css',
+      )
+    );
+  }
+  elseif ($node == 'uio_full_page_preview') {
+    $page['content']['#attached'] = array(
+      'css' => array($lib_path . '/components/uiOptions/css/FullPreviewUIOptions.css',
         $lib_path . '/components/uiOptions/css/FullUIOptions.css',
       )
     );
@@ -415,15 +507,16 @@ function infusion_uio_page_build(&$page) {
   //dpm($page);
 }
 
-/**
- * Implements hook_theme().
- */
-function infusion_uio_theme($existing, $type, $theme, $path) {
-  return array(
-    'theme_name' => array(
-      'variables' => array(
-        'options' => NULL,
-      ),
-      'template' => 'theme-name'
+//this function will dump the html in a file called "exports" in your files directory
+function to_html() {
+  /// use absolute paths with drupal_http_request
+  $response = drupal_http_request(url('<front>', array(
+    'absolute' => 'TRUE',
+      )), array(
+    'headers' => array(
+      'Accept' => 'text/html',
+    )
   ));
+  file_save_data($response->data, 'public://front.html', FILE_EXISTS_REPLACE);
 }
+
