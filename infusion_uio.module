@@ -462,25 +462,6 @@ function uio_fatpanel_frame() {
     <![endif]--> ';
   $output .= '<title>UI Options</title>';
 
-  $output .= '<script src="' . $GLOBALS['base_url'] . '/misc/jquery.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/jquery.once.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/drupal.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.core.min.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.widget.min.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/jquery.cookie.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/jquery.form.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.mouse.min.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.draggable.min.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.resizable.min.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/jquery.ba-bbq.js"></script>';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.tabs.min.js">';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.slider.min.js">';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.button.min.js">';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.position.min.js">';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ui/jquery.ui.dialog.min.js">';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/ajax.js">';
-$output .= '<script src="' . $GLOBALS['base_url'] . '/misc/progress.js">';
-
   $output .= '<script type="text/javascript" src="' . $infusion . '/MyInfusion.js' . '"></script></head>';
   $output .= '  <body class="fl-uiOptions-fatPanel fl-focus">
     <span class="fl-hidden">
