@@ -55,7 +55,7 @@ function infusion_uio_menu() {
     'page callback' => 'infusion_uio_fullpage_preview',
     'type' => MENU_CALLBACK,
   );
-  $items['uio_fatpanel_frame'] = array(
+  $items['uio-fp-frame'] = array(
     'title' => 'Fat Panel Frame',
     'description' => 'Configure Infusion User Interface Options',
     'access callback' => 'user_access',
@@ -295,7 +295,7 @@ function infusion_uio_page_alter(&$vars) {
   $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
 
   //Define some settings for this module and pass it to Drupal.settings.
-  $fatpanel_frame = 'uio_fatpanel_frame';
+  $fatpanel_frame = 'uio-fp-frame';
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
@@ -461,6 +461,27 @@ function uio_fatpanel_frame() {
         <link rel="stylesheet" type="text/css" href="../css/ie8.css" />
     <![endif]--> ';
   $output .= '<title>UI Options</title>';
+
+  $output .= '<script src="http://localhost/drupal7/misc/jquery.js"></script>
+<script src="http://localhost/drupal7/misc/jquery.once.js"></script>
+<script src="http://localhost/drupal7/misc/drupal.js"></script>
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.core.min.js"></script>
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.widget.min.js"></script>
+<script src="http://localhost/drupal7/misc/jquery.cookie.js"></script>
+<script src="http://localhost/drupal7/misc/jquery.form.js"></script>
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.mouse.min.js"></script>
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.draggable.min.js"></script>
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.resizable.min.js"></script>
+<script src="http://localhost/drupal7/misc/jquery.ba-bbq.js"></script>
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.tabs.min.js">
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.slider.min.js">
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.button.min.js">
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.position.min.js">
+<script src="http://localhost/drupal7/misc/ui/jquery.ui.dialog.min.js">
+<script src="http://localhost/drupal7/misc/ajax.js">
+<script src="http://localhost/drupal7/misc/progress.js">
+';
+
   $output .= '<script type="text/javascript" src="' . $infusion . '/MyInfusion.js' . '"></script></head>';
   $output .= '  <body class="fl-uiOptions-fatPanel fl-focus">
     <span class="fl-hidden">

@@ -3,5 +3,5 @@ description = Provides users with options to customize the appearance of the pag
 core = 7.x
 configure = admin/config/user-interface/infusion-uio
 dependencies[] = libraries
-dependencies[] = jquery_update
+;dependencies[] = jquery_update
 ; stylesheets[all][] = infusion_uio.css
