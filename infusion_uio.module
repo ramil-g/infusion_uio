@@ -284,6 +284,13 @@ function infusion_uio_libraries_info() {
  */
 function infusion_uio_page_alter(&$vars) {
   //Load the Infusion library
+  drupal_add_library('system', 'ui.tabs');
+  drupal_add_library('system', 'ui.widget');
+  drupal_add_library('system', 'ui.slider');
+  drupal_add_library('system', 'ui.dialog');
+  drupal_add_library('system', 'ui.draggable');
+  drupal_add_library('system', 'ui.mouse');
+  drupal_add_library('system', 'ui.position');
   libraries_load('infusion');
   $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
 
@@ -455,7 +462,14 @@ function uio_fatpanel_frame() {
     <![endif]--> ';
   $output .= '<title>UI Options</title>';
 
-  $output .= '<script type="text/javascript" src="' . $infusion . '/MyInfusion.js' . '"></script></head>';
+  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/jquery/1.7/jquery.js"></script>';
+  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.core.js"></script>';
+  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.widget.js"></script>';
+  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.mouse.js"></script>';
+  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.slider.js"></script>';
+  $output .= '<script src="' . $infusion . '/lib/jquery/plugins/touchPunch/js/jquery.ui.touch-punch.js"></script>';
+  $output .= '<script src="' . $infusion . '/lib/json/js/json2.js"></script>';
+  $output .= '<script src="' . $infusion . '/MyInfusion.js' . '"></script></head>';
   $output .= '  <body class="fl-uiOptions-fatPanel fl-focus">
     <span class="fl-hidden">
       <div class="flc-toc-tocContainer"></div>
