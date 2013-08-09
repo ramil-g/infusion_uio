@@ -234,45 +234,41 @@ function infusion_uio_libraries_info() {
         'MyInfusion.js',
       ),
       'css' => array(
-        'components/uiOptions/css/fss/fss-text-uio.css',
-        'components/uiOptions/css/fss/fss-theme-bw-uio.css',
-        'components/uiOptions/css/fss/fss-theme-by-uio.css',
-        'components/uiOptions/css/fss/fss-theme-coal-uio.css',
-        'components/uiOptions/css/fss/fss-theme-mist-uio.css',
-        'components/uiOptions/css/fss/fss-theme-rust-uio.css',
-        'components/uiOptions/css/fss/fss-theme-slate-uio.css',
-        'components/uiOptions/css/fss/fss-theme-wb-uio.css',
-        'components/uiOptions/css/fss/fss-theme-yb-uio.css',
-//        'components/uiOptions/css/FatPanelUIOptions.css',
-//        'components/uiOptions/css/FatPanelUIOptionsFrame.css',
-//        'components/uiOptions/css/FullNoPreviewUIOptions.css',
-//        'components/uiOptions/css/FullPreviewUIOptions.css',
-//        'components/uiOptions/css/FullUIOptions.css',
-        'components/uiOptions/css/ie8.css',
-        'components/uiOptions/css/UIOptions.css',
-        'framework/fss/css/fss-base-context.css',
-        'framework/fss/css/fss-base-global.css',
-        'framework/fss/css/fss-JSR168Bridge.css',
-        'framework/fss/css/fss-layout.css',
-        'framework/fss/css/fss-mobile-layout.css',
-        'framework/fss/css/fss-mobile-theme-android.css',
-        'framework/fss/css/fss-mobile-theme-iphone.css',
-        'framework/fss/css/fss-reset-context.css',
         'framework/fss/css/fss-reset-global.css',
-        'framework/fss/css/fss-reset.css',
+        'framework/fss/css/fss-base-global.css',
+        'framework/fss/css/fss-layout.css',
         'framework/fss/css/fss-text.css',
-        'framework/fss/css/fss-theme-bw.css',
-        'framework/fss/css/fss-theme-by.css',
-        'framework/fss/css/fss-theme-coal.css',
-        'framework/fss/css/fss-theme-debug.css',
-        'framework/fss/css/fss-theme-hc.css',
-        'framework/fss/css/fss-theme-hci.css',
-        'framework/fss/css/fss-theme-mist.css',
-        'framework/fss/css/fss-theme-rust.css',
-        'framework/fss/css/fss-theme-slate.css',
-        'framework/fss/css/fss-theme-wb.css',
-        'framework/fss/css/fss-theme-yb.css',
-        'framework/fss/css/fss-transitions.css',
+        'components/uiOptions/css/fss/fss-theme-bw-uio.css',
+        'components/uiOptions/css/fss/fss-theme-wb-uio.css',
+        'components/uiOptions/css/fss/fss-theme-by-uio.css',
+        'components/uiOptions/css/fss/fss-theme-yb-uio.css',        
+        'components/uiOptions/css/fss/fss-text-uio.css',
+        'components/uiOptions/css/UIOptions.css',
+        'components/uiOptions/css/ie8.css',
+        
+//        'framework/fss/css/fss-theme-by.css',        
+//        'components/uiOptions/css/fss/fss-theme-coal-uio.css',
+//        'components/uiOptions/css/fss/fss-theme-mist-uio.css',
+//        'components/uiOptions/css/fss/fss-theme-rust-uio.css',
+//        'components/uiOptions/css/fss/fss-theme-slate-uio.css',
+//        'framework/fss/css/fss-base-context.css',
+//        'framework/fss/css/fss-JSR168Bridge.css',
+//        'framework/fss/css/fss-mobile-layout.css',
+//        'framework/fss/css/fss-mobile-theme-android.css',
+//        'framework/fss/css/fss-mobile-theme-iphone.css',
+//        'framework/fss/css/fss-reset-context.css',
+//        'framework/fss/css/fss-reset.css',
+//        'framework/fss/css/fss-theme-bw.css',
+//        'framework/fss/css/fss-theme-coal.css',
+//        'framework/fss/css/fss-theme-debug.css',
+//        'framework/fss/css/fss-theme-hc.css',
+//        'framework/fss/css/fss-theme-hci.css',
+//        'framework/fss/css/fss-theme-mist.css',
+//        'framework/fss/css/fss-theme-rust.css',
+//        'framework/fss/css/fss-theme-slate.css',
+//        'framework/fss/css/fss-theme-wb.css',
+//        'framework/fss/css/fss-theme-yb.css',
+//        'framework/fss/css/fss-transitions.css',
       )
     ),
   );
@@ -295,7 +291,7 @@ function infusion_uio_page_alter(&$vars) {
   $lib_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
 
   //Define some settings for this module and pass it to Drupal.settings.
-  $fatpanel_frame = 'uio-fp-frame';
+  $fatpanel_frame = url('uio-fp-frame');
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
@@ -478,7 +474,7 @@ function uio_fatpanel_frame() {
 </html>';
 
   print $output;
-  drupal_exit();
+  //drupal_exit();
 }
 
 /**

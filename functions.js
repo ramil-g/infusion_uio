@@ -80,7 +80,7 @@ var demo = demo || {};
         },
         uiOptions: {
             options: {
-                gradeNames: ["fluid.uiOptions.starterSettingsPanels", "fluid.uiOptions.initialModel.starter", "fluid.uiOptions.uiEnhancerRelay"]
+                gradeNames: ["fluid.uiOptions.starterPanels", "fluid.uiOptions.initialModel.starter", "fluid.uiOptions.uiEnhancerRelay"]
             }
         }
     };
