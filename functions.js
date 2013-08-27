@@ -80,7 +80,7 @@ var demo = demo || {};
         },
         uiOptions: {
             options: {
-                gradeNames: ["fluid.uiOptions.starterPanels", "fluid.uiOptions.initialModel.starter", "fluid.uiOptions.uiEnhancerRelay"]
+                gradeNames: ["fluid.uiOptions.starterPanels", "fluid.uiOptions.rootModel.starter", "fluid.uiOptions.uiEnhancerRelay"]
             }
         }
     };
@@ -112,6 +112,7 @@ var demo = demo || {};
         }
     };
     
+    $.extend(true, commonOpts, basicFullPageOpts);
 
     /**
      * Initialize UI Options on the "Fat Panel" version. This version of UI Options uses the
@@ -125,14 +126,14 @@ var demo = demo || {};
      * Initialize UI Options on the "Full Page, No Preview" version.
      */
     demo.initFullNoPreview = function (container, options) {
-        fluid.uiOptions.fullNoPreview(container, $.extend(true, {}, basicFullPageOpts, options));
+        fluid.uiOptions.fullNoPreview(container, $.extend(true, {}, commonOpts, options));
     };
 
     /**
      * Initialize UI Options on the "Full Page, With Preview" version.
      */
     demo.initFullWithPreview = function (container, options) {
-        fluid.uiOptions.fullPreview(container, $.extend(true, {}, basicFullPageOpts, options));
+        fluid.uiOptions.fullPreview(container, $.extend(true, {}, commonOpts, options));
     };       
     
 })(jQuery, fluid);
