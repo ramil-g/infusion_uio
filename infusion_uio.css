@@ -1,4 +1,11 @@
 html 
 {
-    font-size: 1em;
+    font-size: 16px;
+}
+.fl-uiOptions-fatPanel {
+    overflow-x: hidden;
+    height: auto;
+}
+.fl-uio-tabs {
+    float: right;
 }
