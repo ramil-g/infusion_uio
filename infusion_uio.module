@@ -318,8 +318,15 @@ function infusion_uio_fullpage_preview() {
  */
 function uio_fatpanel_frame() {
 
-//get path to infusion library
+//set up some variables
   $infusion = libraries_get_path('infusion');
+  $infusion_module = drupal_get_path('module', 'infusion_uio');
+  $jquery_update = drupal_get_path('module', 'jquery_update');
+  drupal_add_library('system', 'ui.widget');
+  drupal_add_library('system', 'ui.slider');
+  drupal_add_library('system', 'ui.mouse');
+  $js_files = drupal_get_js();
+
 
   $output = '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:rsf="http://ponder.org.uk/rsf">
@@ -335,10 +342,10 @@ function uio_fatpanel_frame() {
   $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-theme-yb-uio.css" />';
   $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/fss/fss-text-uio.css" />';
 
-  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-bw/bw.css" />';
-  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-wb/wb.css" />';
-  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-by/by.css" />';
-  $output .= '<link rel="stylesheet" type="text/css" href="' . drupal_get_path('module', 'infusion_uio') . '/css/fl-theme-yb/yb.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion_module . '/css/fl-theme-bw/bw.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion_module . '/css/fl-theme-wb/wb.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion_module . '/css/fl-theme-by/by.css" />';
+  $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion_module . '/css/fl-theme-yb/yb.css" />';
 
   $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/UIOptions.css" />';
   $output .= '<link rel="stylesheet" type="text/css" href="' . $infusion . '/components/uiOptions/css/FatPanelUIOptionsFrame.css" />';
@@ -349,11 +356,7 @@ function uio_fatpanel_frame() {
     <![endif]--> ';
   $output .= '<title>UI Options</title>';
 
-  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/jquery/1.7/jquery.js"></script>';
-  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.core.js"></script>';
-  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.widget.js"></script>';
-  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.mouse.js"></script>';
-  $output .= '<script src="' . drupal_get_path('module', 'jquery_update') . '/replace/ui/ui/jquery.ui.slider.js"></script>';
+  $output .= $js_files;
   $output .= '<script src="' . $infusion . '/lib/jquery/plugins/touchPunch/js/jquery.ui.touch-punch.js"></script>';
   $output .= '<script src="' . $infusion . '/lib/json/js/json2.js"></script>';
   $output .= '<script src="' . $infusion . '/MyInfusion.js' . '"></script></head>';
@@ -363,7 +366,6 @@ function uio_fatpanel_frame() {
     </span>
   </body>
 </html>';
-
   print $output;
   //drupal_exit();
 }
