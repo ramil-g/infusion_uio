@@ -132,11 +132,10 @@ function infusion_uio_libraries_info() {
         'components/uiOptions/css/fss/fss-theme-bw-uio.css',
         'components/uiOptions/css/fss/fss-theme-wb-uio.css',
         'components/uiOptions/css/fss/fss-theme-by-uio.css',
-        'components/uiOptions/css/fss/fss-theme-yb-uio.css',        
+        'components/uiOptions/css/fss/fss-theme-yb-uio.css',
         'components/uiOptions/css/fss/fss-text-uio.css',
         'components/uiOptions/css/UIOptions.css',
         'components/uiOptions/css/ie8.css',
-        
 //        'framework/fss/css/fss-theme-by.css',        
 //        'components/uiOptions/css/fss/fss-theme-coal-uio.css',
 //        'components/uiOptions/css/fss/fss-theme-mist-uio.css',
@@ -198,16 +197,9 @@ function infusion_uio_page_alter(&$vars) {
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
 
   //Add the correct javascript file
-  if (current_path() == 'uio_full_page' || variable_get('infusion_uio_interface') == 'Full Page') {
-    libraries_get_path('infusion') . $script = drupal_get_path('module', 'infusion_uio') . '/fullpage.js';
-    $options = array('scope' => 'footer');
-    drupal_add_js($script, $options);
-  }
-  elseif (variable_get('infusion_uio_interface') == 'Fat Panel Options') {
-    $script = drupal_get_path('module', 'infusion_uio') . '/fatpanel.js';
-    $options = array('scope' => 'footer');
-    drupal_add_js($script, $options);
-  }
+  libraries_get_path('infusion') . $script = drupal_get_path('module', 'infusion_uio') . '/uioinit.js';
+  $options = array('scope' => 'footer');
+  drupal_add_js($script, $options);
   //Add another js file
   $script2 = drupal_get_path('module', 'infusion_uio') . '/functions.js';
   $options2 = array('scope' => 'footer');
@@ -222,7 +214,7 @@ function infusion_uio_preprocess_html(&$variables) {
   $uio_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
 
   //Add the Page Enhancer class to body tag
-  $variables['classes_array'][] = 'uio-demo-theme';
+  $variables['classes_array'][] = 'uio-infusionmodule-theme';
 
   //Add the container divs for the different UIOs
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
