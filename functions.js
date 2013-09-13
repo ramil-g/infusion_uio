@@ -105,7 +105,7 @@ var infusionmodule = infusionmodule || {};
                 gradeNames: ["fluid.uiOptions.starterPanels", "fluid.uiOptions.rootModel.starter", "fluid.uiOptions.uiEnhancerRelay"],
                 listeners: {
                     onCancel: function () {
-                        alert("Cancelled - would normally cancel any unsaved changes and return to the previous page.");
+                        parent.history.back();
                     }
                 }
             }
