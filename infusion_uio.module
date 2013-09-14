@@ -386,7 +386,6 @@ function infusion_uio_page_build(&$page) {
   elseif (variable_get('infusion_uio_interface') == 'Fat Panel Options') {
     $page['content']['#attached'] = array(
       'css' => array($lib_path . '/components/uiOptions/css/FatPanelUIOptions.css',
-        $lib_path . '/components/uiOptions/css/FatPanelUIOptionsFrame.css',
       )
     );
   }
