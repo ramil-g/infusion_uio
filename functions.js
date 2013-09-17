@@ -45,7 +45,6 @@ var infusionmodule = infusionmodule || {};
      * itself.
      */
     var pathToTocTemplate = Drupal.settings.infusion_uio.library_path + "/components/tableOfContents/html/TableOfContents.html";
-    var pathToTocTemplate = Drupal.settings.infusion_uio.library_path + "/components/tableOfContents/html/TableOfContents.html";
 
     /**
      * Initialize a settings store for the page.
@@ -104,6 +103,13 @@ var infusionmodule = infusionmodule || {};
         }
     };
     
+    var previewOpts = {
+                    preview: {
+                        options: {
+                            templateUrl: Drupal.settings.infusion_uio.full_preview_iframe
+                        }
+                    }
+                }
     /**
      * Initialize UI Options on the "Fat Panel" version. This version of UI Options uses the
      * page itself as a live preview.
@@ -123,7 +129,7 @@ var infusionmodule = infusionmodule || {};
      * Initialize UI Options on the "Full Page, With Preview" version.
      */
     infusionmodule.initFullWithPreview = function (container, options) {
-        fluid.uiOptions.fullPreview(container, $.extend(true, {}, commonOpts, basicFullPageOpts, options));
+        fluid.uiOptions.fullPreview(container, $.extend(true, {}, commonOpts, basicFullPageOpts, previewOpts, options));
     };       
     
 })(jQuery, fluid);
