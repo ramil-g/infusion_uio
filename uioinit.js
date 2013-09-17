@@ -15,6 +15,10 @@
             else if (curpath.indexOf('uio_full_page') >= 0) {
                 infusionmodule.initFullNoPreview("#myUIOptions");
             }
+            else if (curpath.indexOf('uio_full_page_preview') >= 0) {
+                infusionmodule.initFullWithPreview("#myUIOptions");
+            }
+            
             
         }
     };
