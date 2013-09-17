@@ -12,10 +12,11 @@ Requirements:
 
 Installation Instructions:
 
-1. Download and install the required modules. Make sure to configure the jQuery Update Module and set the jQuery version to 1.7
-2. Download the module and put in your sites/all/modules folder.
-3. Downlaod the Infusion library from here: https://github.com/ramil-g/fluid1.5
-4. After downloading the Infusion library unzip it and rename it to 'infusion' and put it in sites/all/libraries folder.
+1. Download and install the required modules. Make sure to configure the jQuery Update Module and set the jQuery version to 1.7. This can be done by going to admin/config (the admin configuration page).
+2. Download the module and put it in your sites/all/modules folder.
+3. Go to https://github.com/ramil-g/fluid1.5 and download the Infusion library from there. This library contains a MyInfusion.js file which is a concatenation of all the library's javascript files. This has been minified but if you would like to use an uncompressed version, there is a file included called MyInfusionUnminified.js and you can just rename that to MyInfusion.js and rename the original one to something else.
+You will need to use this library because the build from the official site (http://builder.fluidproject.org/) currently does not work with Drupal.   
+4. After downloading the Infusion library unzip it and rename it to 'infusion' and put it in your sites/all/libraries folder.
 You may need to create the 'libraries' folder if it doesn't exist.
 5. Enable the module by going into the admin module page.
 
