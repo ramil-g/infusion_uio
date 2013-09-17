@@ -91,18 +91,9 @@ var infusionmodule = infusionmodule || {};
      * full-page version, with and without Preview.
      */
     var basicFullPageOpts = {
-        gradeNames: ["fluid.uiOptions.transformDefaultPanelsOptions"],
-        // Tell UIOptions where to find all the templates, relative to this file
-        prefix: pathToTemplates,
-        templateLoader: {
-            options: {
-                gradeNames: ["fluid.uiOptions.starterTemplateLoader"]
-            }
-        },
         // Tell UIOptions where to redirect to if the user cancels the operation
         uiOptions: {
             options: {
-                gradeNames: ["fluid.uiOptions.starterPanels", "fluid.uiOptions.rootModel.starter", "fluid.uiOptions.uiEnhancerRelay"],
                 listeners: {
                     onCancel: function () {
                         parent.history.back();
@@ -112,8 +103,6 @@ var infusionmodule = infusionmodule || {};
         }
     };
     
-    $.extend(true, commonOpts, basicFullPageOpts);
-
     /**
      * Initialize UI Options on the "Fat Panel" version. This version of UI Options uses the
      * page itself as a live preview.
@@ -126,7 +115,7 @@ var infusionmodule = infusionmodule || {};
      * Initialize UI Options on the "Full Page, No Preview" version.
      */
     infusionmodule.initFullNoPreview = function (container, options) {
-        fluid.uiOptions.fullNoPreview(container, $.extend(true, {}, commonOpts, options));
+        fluid.uiOptions.fullNoPreview(container, $.extend(true, {}, commonOpts, basicFullPageOpts, options));
     };
 
     /**
