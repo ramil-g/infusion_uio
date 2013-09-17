@@ -122,7 +122,7 @@ var infusionmodule = infusionmodule || {};
      * Initialize UI Options on the "Full Page, With Preview" version.
      */
     infusionmodule.initFullWithPreview = function (container, options) {
-        fluid.uiOptions.fullPreview(container, $.extend(true, {}, commonOpts, options));
+        fluid.uiOptions.fullPreview(container, $.extend(true, {}, commonOpts, basicFullPageOpts, options));
     };       
     
 })(jQuery, fluid);

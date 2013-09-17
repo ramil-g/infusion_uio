@@ -12,10 +12,10 @@
             if ((Drupal.settings.infusion_uio.uio_interface == 'Fat Panel Options') && ($('*').hasClass('flc-uiOptions-fatPanel'))) {
                 infusionmodule.initFatPanel(".flc-uiOptions-fatPanel");
             }
-            else if (curpath.indexOf('uio_full_page') >= 0) {
+            else if (curpath.indexOf('uio_full_page') >= 0 && (Drupal.settings.infusion_uio.uio_interface == 'Full Page')) {
                 infusionmodule.initFullNoPreview("#myUIOptions");
             }
-            else if (curpath.indexOf('uio_full_page_preview') >= 0) {
+            else if (curpath.indexOf('uio_full_page_preview') >= 0 && (Drupal.settings.infusion_uio.uio_interface == 'Full Page With Preview')) {
                 infusionmodule.initFullWithPreview("#myUIOptions");
             }
             
