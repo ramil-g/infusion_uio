@@ -16,7 +16,15 @@
                 infusionmodule.initFullNoPreview("#myUIOptions");
             }
             else if (curpath.indexOf('uio_full_page_preview') >= 0 && (Drupal.settings.infusion_uio.uio_interface == 'Full Page With Preview')) {
-                infusionmodule.initFullWithPreview("#myUIOptions");
+                infusionmodule.initFullWithPreview("#myUIOptions",  {
+                    preview: {
+                        options: {
+                            templateUrl: Drupal.settings.infusion_uio.full_preview_iframe
+                        }
+                    }
+                }
+            
+            );
             }
             
             

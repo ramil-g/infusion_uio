@@ -45,6 +45,7 @@ var infusionmodule = infusionmodule || {};
      * itself.
      */
     var pathToTocTemplate = Drupal.settings.infusion_uio.library_path + "/components/tableOfContents/html/TableOfContents.html";
+    var pathToTocTemplate = Drupal.settings.infusion_uio.library_path + "/components/tableOfContents/html/TableOfContents.html";
 
     /**
      * Initialize a settings store for the page.
