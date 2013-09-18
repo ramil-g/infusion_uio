@@ -103,13 +103,16 @@ var infusionmodule = infusionmodule || {};
         }
     };
     
+    /**
+     * Options for the Full Page with Preview telling it where the html for the preview is located.
+     */
     var previewOpts = {
                     preview: {
                         options: {
                             templateUrl: Drupal.settings.infusion_uio.full_preview_iframe
                         }
                     }
-                }
+                };
     /**
      * Initialize UI Options on the "Fat Panel" version. This version of UI Options uses the
      * page itself as a live preview.

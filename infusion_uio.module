@@ -185,14 +185,14 @@ function infusion_uio_page_alter(&$vars) {
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
   $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
   $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
-  $uio_iframe_html = file_create_url('public://front.html');
+  $frontpage = url('<front>', array('absolute' => TRUE));
   $uio_settings = array(
     'uio_interface' => $uio_interface,
     'fp_show_btn' => $uio_fp_showbtn,
     'fp_hide_btn' => $uio_fp_hidebtn,
     'library_path' => $lib_path,
     'fatpanel_frame' => $fatpanel_frame,
-    'full_preview_iframe' => $uio_iframe_html,
+    'full_preview_iframe' => $frontpage,
   );
   drupal_add_js(array('infusion_uio' => $uio_settings), 'setting');
 
@@ -294,8 +294,6 @@ function infusion_uio_fullpage() {
  */
 function infusion_uio_fullpage_preview() {
 
-  to_html();
-
   $output = array(
     '#markup' => '<h1>User Interface Options</h1>        
             <div id="myUIOptions"></div>',
@@ -394,17 +392,3 @@ function infusion_uio_page_build(&$page) {
   }
   //dpm($page);
 }
-
-//this function will dump the html in a file called "exports" in your files directory
-function to_html() {
-  /// use absolute paths with drupal_http_request
-  $response = drupal_http_request(url('<front>', array(
-    'absolute' => 'TRUE',
-      )), array(
-    'headers' => array(
-      'Accept' => 'text/html',
-    )
-  ));
-  file_save_data($response->data, 'public://front.html', FILE_EXISTS_REPLACE);
-}
-
