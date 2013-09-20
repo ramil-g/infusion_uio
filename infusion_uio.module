@@ -214,7 +214,7 @@ function infusion_uio_preprocess_html(&$variables) {
   $uio_path = $GLOBALS['base_url'] . '/' . libraries_get_path('infusion');
 
   //Add the Page Enhancer class to body tag
-  $variables['classes_array'][] = 'uio-infusionmodule-theme';
+  $variables['classes_array'][] = 'infusion-uiomodule-theme';
 
   //Add the container divs for the different UIOs
   $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
@@ -369,8 +369,7 @@ function infusion_uio_page_build(&$page) {
   drupal_add_css(drupal_get_path('module', 'infusion_uio') . '/infusion_uio.css', array('group' => CSS_THEME));
   if ($node == 'uio_full_page') {
     $page['content']['#attached'] = array(
-      'css' => array($lib_path . '/components/uiOptions/css/FullNoPreviewUIOptions.css',
-        $lib_path . '/components/uiOptions/css/FullUIOptions.css',
+      'css' => array($lib_path . '/components/uiOptions/css/FullUIOptions.css',
       )
     );
   }
@@ -390,5 +389,4 @@ function infusion_uio_page_build(&$page) {
   else {
     return;
   }
-  //dpm($page);
 }

@@ -11,12 +11,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
 // Declare dependencies
-/*global infusionmodule:true, fluid, jQuery, window*/
+/*global infusionUIOModule:true, fluid, jQuery, window*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
 
-var infusionmodule = infusionmodule || {};
+var infusionUIOModule = infusionUIOModule || {};
 (function ($, fluid) {       
 
     // Register into the environment the fact that the environment includes the Drupal UIO module
@@ -49,7 +49,7 @@ var infusionmodule = infusionmodule || {};
     /**
      * Initialize a settings store for the page.
      */
-    infusionmodule.initSettingsStore = function () {
+    infusionUIOModule.initSettingsStore = function () {
         fluid.globalSettingsStore();
     };
 
@@ -57,7 +57,7 @@ var infusionmodule = infusionmodule || {};
      * Initialize UI Enhancer for the page. This function is used by the two full-page
      * UI Options pages as well as by the demo page itself.
      */
-    infusionmodule.initPageEnhancer = function (customThemeName) {
+    infusionUIOModule.initPageEnhancer = function (customThemeName) {
         fluid.pageEnhancer({
             gradeNames: ["fluid.uiEnhancer.starterEnactors"],
             tocTemplate: pathToTocTemplate,
@@ -117,21 +117,21 @@ var infusionmodule = infusionmodule || {};
      * Initialize UI Options on the "Fat Panel" version. This version of UI Options uses the
      * page itself as a live preview.
      */
-    infusionmodule.initFatPanel = function (container) {
+    infusionUIOModule.initFatPanel = function (container) {
         fluid.uiOptions.fatPanel(container, commonOpts);
     };
     
     /**
      * Initialize UI Options on the "Full Page, No Preview" version.
      */
-    infusionmodule.initFullNoPreview = function (container, options) {
+    infusionUIOModule.initFullNoPreview = function (container, options) {
         fluid.uiOptions.fullNoPreview(container, $.extend(true, {}, commonOpts, basicFullPageOpts, options));
     };
 
     /**
      * Initialize UI Options on the "Full Page, With Preview" version.
      */
-    infusionmodule.initFullWithPreview = function (container, options) {
+    infusionUIOModule.initFullWithPreview = function (container, options) {
         fluid.uiOptions.fullPreview(container, $.extend(true, {}, commonOpts, basicFullPageOpts, previewOpts, options));
     };       
     
