@@ -94,6 +94,9 @@ function infusion_uio_block_view($delta = '') {
     if (variable_get('infusion_uio_interface') == 'Full Page') {
       $content = l(t('UI Options'), 'uio_full_page');
     }
+    elseif (variable_get('infusion_uio_interface') == 'Full Page With Preview') {
+      $content = l(t('UI Options'), 'uio_full_page_preview');
+    }
     else {
       $content = '';
     }
@@ -234,29 +237,45 @@ function infusion_uio_preprocess_html(&$variables) {
         '#weight' => 2,
       );
       break;
+
     case 'Full Page':
-      $variables['page']['page_top']['uio_fullpage'] = array(
-        '#theme' => 'link',
-        '#text' => t('User Interface Options'),
-        '#path' => 'uio_full_page',
-        '#options' => array(
-          'attributes' => array(),
-          'html' => FALSE,
-        ),
-        '#weight' => 2,
-      );
+      if (variable_get('infusion_uio_fullpage_block')) {
+        return;
+      }
+      else {
+        $variables['page']['page_top']['uio_fullpage'] = array(
+          '#theme' => 'link',
+          '#text' => t('Display Preferences'),
+          '#path' => 'uio_full_page',
+          '#options' => array(
+            'attributes' => array(),
+            'html' => FALSE,
+          ),
+          '#weight' => 2,
+          '#prefix' => '<div id="uio-fp-wrapper">',
+          '#suffix' => '</div>',
+        );
+      }
       break;
+
     case 'Full Page With Preview':
-      $variables['page']['page_top']['uio_fullpage'] = array(
-        '#theme' => 'link',
-        '#text' => t('User Interface Options'),
-        '#path' => 'uio_full_page_preview',
-        '#options' => array(
-          'attributes' => array(),
-          'html' => FALSE,
-        ),
-        '#weight' => 2,
-      );
+      if (variable_get('infusion_uio_fullpagepreview_block')) {
+        return;
+      }
+      else {
+        $variables['page']['page_top']['uio_fullpage'] = array(
+          '#theme' => 'link',
+          '#text' => t('Display Preferences'),
+          '#path' => 'uio_full_page_preview',
+          '#options' => array(
+            'attributes' => array(),
+            'html' => FALSE,
+          ),
+          '#weight' => 2,
+          '#prefix' => '<div id="uio-fp-wrapper">',
+          '#suffix' => '</div>',
+        );
+      }
       break;
   }
   //Add the container div for the Infusion Table of Contents

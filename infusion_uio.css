@@ -9,3 +9,11 @@ html
 .fl-uio-tabs {
     float: right;
 }
+#uio-fp-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;    
+}
+#uio-fp-wrapper a{
+    float: right;
+}
