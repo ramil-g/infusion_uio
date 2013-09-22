@@ -69,13 +69,6 @@ function infusion_uio_menu() {
 }
 
 /**
- * Ajax  callback for admin settings form.
- */
-function infusion_uio_moreoptions_ajax($form, $form_state) {
-  return $form['infusion_uio_more'];
-}
-
-/**
  * Implements hook_block_info().
  */
 function infusion_uio_block_info() {
@@ -139,29 +132,6 @@ function infusion_uio_libraries_info() {
         'components/uiOptions/css/fss/fss-text-uio.css',
         'components/uiOptions/css/UIOptions.css',
         'components/uiOptions/css/ie8.css',
-//        'framework/fss/css/fss-theme-by.css',        
-//        'components/uiOptions/css/fss/fss-theme-coal-uio.css',
-//        'components/uiOptions/css/fss/fss-theme-mist-uio.css',
-//        'components/uiOptions/css/fss/fss-theme-rust-uio.css',
-//        'components/uiOptions/css/fss/fss-theme-slate-uio.css',
-//        'framework/fss/css/fss-base-context.css',
-//        'framework/fss/css/fss-JSR168Bridge.css',
-//        'framework/fss/css/fss-mobile-layout.css',
-//        'framework/fss/css/fss-mobile-theme-android.css',
-//        'framework/fss/css/fss-mobile-theme-iphone.css',
-//        'framework/fss/css/fss-reset-context.css',
-//        'framework/fss/css/fss-reset.css',
-//        'framework/fss/css/fss-theme-bw.css',
-//        'framework/fss/css/fss-theme-coal.css',
-//        'framework/fss/css/fss-theme-debug.css',
-//        'framework/fss/css/fss-theme-hc.css',
-//        'framework/fss/css/fss-theme-hci.css',
-//        'framework/fss/css/fss-theme-mist.css',
-//        'framework/fss/css/fss-theme-rust.css',
-//        'framework/fss/css/fss-theme-slate.css',
-//        'framework/fss/css/fss-theme-wb.css',
-//        'framework/fss/css/fss-theme-yb.css',
-//        'framework/fss/css/fss-transitions.css',
       )
     ),
   );
@@ -228,7 +198,7 @@ function infusion_uio_preprocess_html(&$variables) {
                       <div id="myUIOptions" class="flc-slidingPanel-panel flc-uiOptions-iframe"></div>
                       <div class="fl-panelBar"><span class="fl-uio-tabs">
 	                <button id="reset" class="flc-uiOptions-reset fl-uiOptions-reset"><span class="fl-icon-undo"></span> Reset</button>
-	            	<button id="show-hide" class="flc-slidingPanel-toggleButton fl-uiOptions-showHide"> Show/Hide</button>
+	            	<button id="show-hide" class="flc-slidingPanel-toggleButton fl-uiOptions-showHide"></button>
             	</span></div>
                       </div>',
         '#attached' => array(

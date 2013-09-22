@@ -18,8 +18,6 @@
             else if (curpath.indexOf('uio_full_page_preview') >= 0 && (Drupal.settings.infusion_uio.uio_interface == 'Full Page With Preview')) {
                 infusionUIOModule.initFullWithPreview("#myUIOptions");
             }
-            
-            
         }
     };
 })(jQuery);

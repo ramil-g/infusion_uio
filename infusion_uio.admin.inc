@@ -34,7 +34,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $defaultvalue));
     $form['infusion_uio_more']['infusion_uio_show_btn'] = array(
       '#type' => 'textfield',
-      '#default_value' => variable_get('infusion_uio_show_btn', 'Preferences'),
+      '#default_value' => variable_get('infusion_uio_show_btn', 'Open Display Preferences'),
       '#maxlength' => 128,
       '#required' => TRUE,
       '#title' => t('Show Button'),
@@ -42,7 +42,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     );
     $form['infusion_uio_more']['infusion_uio_hide_btn'] = array(
       '#type' => 'textfield',
-      '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
+      '#default_value' => variable_get('infusion_uio_hide_btn', 'Close Display Preferences'),
       '#maxlength' => 128,
       '#required' => TRUE,
       '#title' => t('Hide Button'),
@@ -113,4 +113,11 @@ function infusion_ui_settings_form($node, &$form_state) {
   }
 
   return system_settings_form($form);
+}
+
+/**
+ * Ajax  callback for admin settings form.
+ */
+function infusion_uio_moreoptions_ajax($form, $form_state) {
+  return $form['infusion_uio_more'];
 }
