@@ -1,0 +1,33 @@
+<?php
+/**
+ * @file
+ * Infusion UIO installation
+ */
+
+/**
+ * Implements hook_install().
+ */
+function infusion_uio_install() {
+  //set default variables
+  variable_set('infusion_uio_interface', 'Fat Panel Options');
+  variable_set('infusion_uio_show_btn', 'Open Display Preferences');
+  variable_set('infusion_uio_hide_btn', 'Close Display Preferences');
+  variable_set('infusion_uio_fullpage_block', 0);
+  variable_set('infusion_uio_fullpagepreview_block', 0);
+  $t = get_t();
+  drupal_set_message($t('Infusion UIO variables created.'));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function infusion_uio_uninstall() {
+  //set default variables
+  variable_del('infusion_uio_interface');
+  variable_del('infusion_uio_show_btn');
+  variable_del('infusion_uio_hide_btn');
+  variable_del('infusion_uio_fullpage_block');
+  variable_del('infusion_uio_fullpagepreview_block');
+  $t = get_t();
+  drupal_set_message($t('Infusion UIO variables deleted.'));
+}

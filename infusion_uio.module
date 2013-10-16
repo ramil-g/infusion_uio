@@ -155,9 +155,9 @@ function infusion_uio_page_alter(&$vars) {
 
   //Define some settings for this module and pass it to Drupal.settings.
   $fatpanel_frame = url('uio-fp-frame');
-  $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
-  $uio_fp_showbtn = variable_get('infusion_uio_show_btn', 'Preferences');
-  $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn', 'Preferences');
+  $uio_interface = variable_get('infusion_uio_interface');
+  $uio_fp_showbtn = variable_get('infusion_uio_show_btn');
+  $uio_fp_hidebtn = variable_get('infusion_uio_hide_btn');
   $frontpage = url('<front>', array('absolute' => TRUE));
   $uio_settings = array(
     'uio_interface' => $uio_interface,
@@ -190,7 +190,7 @@ function infusion_uio_preprocess_html(&$variables) {
   $variables['classes_array'][] = 'infusion-uiomodule-theme';
 
   //Add the container divs for the different UIOs
-  $uio_interface = variable_get('infusion_uio_interface', 'Fat Panel Options');
+  $uio_interface = variable_get('infusion_uio_interface');
   switch ($uio_interface) {
     case 'Fat Panel Options':
       $variables['page']['page_top']['uio_fat_panel'] = array(

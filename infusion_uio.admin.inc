@@ -10,12 +10,12 @@
  */
 function infusion_ui_settings_form($node, &$form_state) {
 
-  $defaultvalue = variable_get('infusion_uio_interface', 'Fat Panel Options');
+  $defaultvalue = variable_get('infusion_uio_interface');
   $uio_options = array(t('Fat Panel Options'), t('Full Page'), t('Full Page With Preview'));
   $form['infusion_uio_interface'] = array(
     '#type' => 'radios',
     '#title' => t('Select the default UIO interface'),
-    '#default_value' => variable_get('infusion_uio_interface', 'Fat Panel Options'),
+    '#default_value' => variable_get('infusion_uio_interface'),
     '#options' => drupal_map_assoc($uio_options),
     '#ajax' => array(
       'callback' => 'infusion_uio_moreoptions_ajax',
@@ -34,7 +34,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $defaultvalue));
     $form['infusion_uio_more']['infusion_uio_show_btn'] = array(
       '#type' => 'textfield',
-      '#default_value' => variable_get('infusion_uio_show_btn', 'Open Display Preferences'),
+      '#default_value' => variable_get('infusion_uio_show_btn'),
       '#maxlength' => 128,
       '#required' => TRUE,
       '#title' => t('Show Button'),
@@ -42,7 +42,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     );
     $form['infusion_uio_more']['infusion_uio_hide_btn'] = array(
       '#type' => 'textfield',
-      '#default_value' => variable_get('infusion_uio_hide_btn', 'Close Display Preferences'),
+      '#default_value' => variable_get('infusion_uio_hide_btn'),
       '#maxlength' => 128,
       '#required' => TRUE,
       '#title' => t('Hide Button'),
@@ -56,7 +56,7 @@ function infusion_ui_settings_form($node, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Use block for the link to the Full Page UI Options'),
       '#description' => t('You can use a block for the link to the Full Page UI Options and configure where you want to place it in the block settings page'),
-      '#default_value' => variable_get('infusion_uio_fullpage_block', 0),
+      '#default_value' => variable_get('infusion_uio_fullpage_block'),
     );
   }
   elseif ($defaultvalue == 'Full Page With Preview' && empty($form_state['values']['infusion_uio_interface'])) {
@@ -66,7 +66,7 @@ function infusion_ui_settings_form($node, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Use block for the link to the Full Page UI Options'),
       '#description' => t('You can use a block for the link to the Full Page with Preview UI Options and configure where you want to place it in the block settings page'),
-      '#default_value' => variable_get('infusion_uio_fullpagepreview_block', 0),
+      '#default_value' => variable_get('infusion_uio_fullpagepreview_block'),
     );
   }
   //Populate the more options for the ajax callback
@@ -75,7 +75,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     $form['infusion_uio_more']['#title'] = t('Additional Settings for !uio', array('!uio' => $form_state['values']['infusion_uio_interface']));
     $form['infusion_uio_more']['infusion_uio_show_btn'] = array(
       '#type' => 'textfield',
-      '#default_value' => variable_get('infusion_uio_show_btn', 'Preferences'),
+      '#default_value' => variable_get('infusion_uio_show_btn'),
       '#maxlength' => 128,
       '#required' => TRUE,
       '#title' => t('Show Button'),
@@ -83,7 +83,7 @@ function infusion_ui_settings_form($node, &$form_state) {
     );
     $form['infusion_uio_more']['infusion_uio_hide_btn'] = array(
       '#type' => 'textfield',
-      '#default_value' => variable_get('infusion_uio_hide_btn', 'Preferences'),
+      '#default_value' => variable_get('infusion_uio_hide_btn'),
       '#maxlength' => 128,
       '#required' => TRUE,
       '#title' => t('Hide Button'),
@@ -97,7 +97,7 @@ function infusion_ui_settings_form($node, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Use block for the link to the Full Page UI Options'),
       '#description' => t('You can use a block for the link to the Full Page UI Options and configure where you want to place it in the block settings page'),
-      '#default_value' => variable_get('infusion_uio_fullpage_block', 0),
+      '#default_value' => variable_get('infusion_uio_fullpage_block'),
     );
   }
   elseif (!empty($form_state['values']['infusion_uio_interface']) && $form_state['values']['infusion_uio_interface'] == 'Full Page With Preview') {
@@ -108,7 +108,7 @@ function infusion_ui_settings_form($node, &$form_state) {
       '#type' => 'checkbox',
       '#title' => t('Use block for the link to the Full Page with Preview UI Options'),
       '#description' => t('You can use a block for the link to the Full Page with Preview UI Options and configure where you want to place it in the block settings page'),
-      '#default_value' => variable_get('infusion_uio_fullpagepreview_block', 0),
+      '#default_value' => variable_get('infusion_uio_fullpagepreview_block'),
     );
   }
 
